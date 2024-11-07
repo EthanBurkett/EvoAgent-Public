@@ -5,6 +5,10 @@
 #ifndef PAM_H
 #define PAM_H
 
+#ifndef SYSCONFDIR
+#define SYSCONFDIR "/etc"
+#endif
+
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 #include <security/pam_ext.h>
@@ -38,5 +42,11 @@ PAM_EXTERN int EVOPAM_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const c
  * @return
  */
 PAM_EXTERN int EVOPAM_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv);
+
+/**
+* @brief Initializes the EVO SDK
+* @param {char *} sysconfdir
+*/
+void EVOPAM_init(const char* sysconfdir);
 
 #endif //PAM_H

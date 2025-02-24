@@ -2,13 +2,23 @@
 
 AUTOMAKE_OPTIONS = foreign subdir-objects
 
-# Build PAM module as a shared library
-pammoddir = /lib/security
-pammod_LTLIBRARIES = pam_evo_common.la
-pam_evo_common_la_SOURCES = src/main.c
-pam_evo_common_la_CFLAGS = -I$(top_srcdir)/include
-pam_evo_common_la_LIBADD = vendor/libevopam.a -lpam -lssl -lcrypto -lm -ldl
-pam_evo_common_la_LDFLAGS = -module -avoid-version -shared -pthread
+# Build PAM module as a static library
+lib_LIBRARIES = libpam_evo_common.a
+libpam_evo_common_a_SOURCES = src/main.c
+libpam_evo_common_a_CFLAGS = -I$(top_srcdir)/include
+libpam_evo_common_a_LIBADD = vendor/libevopam.a
+
+# Define build directory
+builddir = $(top_builddir)/build
+
+# Ensure the library is built in the build directory
+all-local:
+	@mkdir -p $(builddir)
+	@cp libpam_evo_common.a $(builddir)/
+
+# Clean build directory
+clean-local:
+	rm -rf $(builddir)
 
 # Define where the binary and other files are installed
 configdir = $(sysconfdir)/evosecurity

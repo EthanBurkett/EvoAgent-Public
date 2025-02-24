@@ -8,7 +8,7 @@ AC_PROG_CC         # Checks for C compiler
 AC_PROG_INSTALL    # Checks for install program
 
 # Initialize libtool
-LT_INIT([disable-static])
+LT_INIT([disable-shared enable-static])
 
 # Check for required libraries and headers
 AC_CHECK_LIB([pam], [pam_start])  # Check if libpam is available
